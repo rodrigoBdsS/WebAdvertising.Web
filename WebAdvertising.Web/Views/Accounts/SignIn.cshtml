@@ -1,0 +1,46 @@
+﻿@model WebAdvertising.Web.Models.Accounts.SignInViewModel
+
+@{
+    ViewData["Title"] = "Sign In Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>View</h1>
+
+<h4>SignInViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <h4>Login using your email address and password</h4>
+        <h5>
+            <a asp-controller="Accounts" asp-action="SignUp">
+                If you are not a member you can sign up here
+            </a>
+        </h5>
+
+        <form method="Post" asp-controller="Accounts" asp-action="View">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
