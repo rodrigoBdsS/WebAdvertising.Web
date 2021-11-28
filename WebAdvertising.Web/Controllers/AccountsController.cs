@@ -52,6 +52,13 @@ namespace WebAdvertising.Web.Controllers
                 {
                     return RedirectToAction("EmailConfirmation");
                 }
+                else
+                {
+                    foreach (var error in createdUser.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+                }
             }
 
             return View();
@@ -61,8 +68,7 @@ namespace WebAdvertising.Web.Controllers
         [ActionName("EmailConfirmation")]
         public IActionResult EmailConfirmation()
         {
-            var model = new EmailConfirmationViewModel();
-            return View(model);
+            return View(new EmailConfirmationViewModel());
         }
 
         [HttpPost]
@@ -85,6 +91,13 @@ namespace WebAdvertising.Web.Controllers
                 {
                     return RedirectToAction("EmailConfirmationSucceeded", new { confirmedEmail = model.Email });
                 }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+                }
             }
 
             return View(model);
@@ -98,9 +111,9 @@ namespace WebAdvertising.Web.Controllers
 
         [HttpGet]
         [ActionName("Login")]
-        public async Task<IActionResult> Login(SignInViewModel model)
+        public IActionResult Login()
         {
-            return View();
+            return View("SignIn", new SignInViewModel());
         }
 
         [HttpPost]
@@ -121,7 +134,7 @@ namespace WebAdvertising.Web.Controllers
                 }
             }
 
-            return View();
+            return View("SignIn", model);
         }
 
         public IActionResult LoginSucceeded(string confirmedEmail)
